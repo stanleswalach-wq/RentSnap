@@ -10,17 +10,13 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.utils import ImageReader
 from PIL import Image
 
-# Automatyczne dopasowanie ścieżki do systemu operacyjnego (Windows vs Linux)
-if os.name == "nt":
-    # Ścieżka dla Windowsa
-    FONT_DIR = "C:/Windows/Fonts"
-    pdfmetrics.registerFont(TTFont("Sans", f"{FONT_DIR}/arial.ttf"))
-    pdfmetrics.registerFont(TTFont("Sans-Bold", f"{FONT_DIR}/arialbd.ttf"))
-else:
-    # Ścieżka dla Linuksa (np. gdyby projekt szedł na serwer)
-    FONT_DIR = "/usr/share/fonts/truetype/liberation"
-    pdfmetrics.registerFont(TTFont("Sans", f"{FONT_DIR}/LiberationSans-Regular.ttf"))
-    pdfmetrics.registerFont(TTFont("Sans-Bold", f"{FONT_DIR}/LiberationSans-Bold.ttf"))
+# Pobieramy katalog bieżącego pliku, aby ścieżki działały wszędzie (Windows i Linux/Railway)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+FONT_DIR = os.path.join(BASE_DIR, "fonts")
+
+# Rejestracja czcionek z lokalnego folderu w projekcie
+pdfmetrics.registerFont(TTFont("Sans", os.path.join(FONT_DIR, "LiberationSans-Regular.ttf")))
+pdfmetrics.registerFont(TTFont("Sans-Bold", os.path.join(FONT_DIR, "LiberationSans-Bold.ttf")))
 
 PAGE_W, PAGE_H = A4
 MARGIN = 18 * mm
