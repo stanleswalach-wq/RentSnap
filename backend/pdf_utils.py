@@ -1,32 +1,35 @@
 """Shared PDF helpers for LOKUM.PDF document generators."""
-import os
-import io
 import base64
+import io
+import os
+from PIL import Image
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.units import mm
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen import canvas
 from reportlab.lib.utils import ImageReader
-from PIL import Image
 
 # Pobieramy katalog bieżącego pliku, aby ścieżki działały wszędzie (Windows i Linux/Railway)
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 FONT_DIR = os.path.join(BASE_DIR, "fonts")
 
 # Rejestracja czcionek z lokalnego folderu w projekcie
-pdfmetrics.registerFont(TTFont("Sans", os.path.join(FONT_DIR, "LiberationSans-Regular.ttf")))
-pdfmetrics.registerFont(TTFont("Sans-Bold", os.path.join(FONT_DIR, "LiberationSans-Bold.ttf")))
+pdfmetrics.registerFont(
+    TTFont("Sans", os.path.join(FONT_DIR, "LiberationSans-Regular.ttf"))
+)
+pdfmetrics.registerFont(
+    TTFont("Sans-Bold", os.path.join(FONT_DIR, "LiberationSans-Bold.ttf"))
+)
 
 PAGE_W, PAGE_H = A4
 MARGIN = 18 * mm
 BOTTOM_MARGIN = 40 * mm
 CONTENT_W = PAGE_W - 2 * MARGIN
 
-INK = (0.102, 0.098, 0.090)      # #1a1917
-ACCENT = (0.710, 0.220, 0.122)    # #b5381f
+INK = (0.102, 0.098, 0.090)  # #1a1917
+ACCENT = (0.710, 0.220, 0.122)  # #b5381f
 GREY = (0.45, 0.44, 0.42)
-
 
 def _split_long_word(word, font, size, width):
     parts, cur = [], ""
