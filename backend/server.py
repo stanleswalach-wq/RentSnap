@@ -19,7 +19,7 @@ from fastapi.responses import Response as RawResponse
 from pydantic import BaseModel, ConfigDict, Field, EmailStr
 from motor.motor_asyncio import AsyncIOMotorClient
 from pymongo import ASCENDING, DESCENDING, IndexModel
-from starlette.middleware.cors import CORSMiddleware
+from fastapi.middleware.cors import CORSMiddleware
 import secrets
 
 from pdf_documents import (
